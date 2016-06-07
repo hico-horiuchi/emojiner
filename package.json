@@ -1,0 +1,31 @@
+{
+  "name": "emojiner",
+  "description": "I am a slack custom emoji craftsman.",
+  "version": "2.19.0",
+  "author": "hico-horiuchi",
+  "license": "MIT",
+  "private": true,
+  "keywords": [
+    "github",
+    "hubot",
+    "slack",
+    "bot"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hico-horiuchi/emojiner.git"
+  },
+  "dependencies": {
+    "cron": ">= 1.1.x",
+    "easy-table": ">= 1.0.x",
+    "hubot": ">= 2.19.x",
+    "hubot-ping": "git://github.com/bouzuya/hubot-ping.git",
+    "hubot-redis-brain": ">= 0.0.x",
+    "hubot-slack": ">= 3.4.x",
+    "request": ">= 2.72.x"
+  },
+  "engines": {
+    "node": ">= 6.2.x",
+    "npm": ">= 3.9.x"
+  }
+}

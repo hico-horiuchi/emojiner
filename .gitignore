@@ -1,0 +1,7 @@
+*~
+.*.swp
+*#*
+.DS_Store
+/node_modules
+/bin/emojiner.local
+/.hubot_history
