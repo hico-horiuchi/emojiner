@@ -1,1 +1,4 @@
-["hubot-ping", "hubot-redis-brain"]
+[
+  "hubot-ping",
+  "hubot-redis-brain"
+]

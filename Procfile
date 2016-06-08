@@ -1,1 +1,1 @@
-web: bin/emojiner -a slack
+web: npm start

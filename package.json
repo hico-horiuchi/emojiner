@@ -22,10 +22,14 @@
     "hubot-ping": "git://github.com/bouzuya/hubot-ping.git",
     "hubot-redis-brain": ">= 0.0.x",
     "hubot-slack": ">= 3.4.x",
-    "request": ">= 2.72.x"
+    "request": ">= 2.72.x",
+    "underscore": ">= 1.8.x"
   },
   "engines": {
     "node": ">= 6.2.x",
     "npm": ">= 3.9.x"
+  },
+  "scripts": {
+    "start": "hubot -a slack -n Emojiner"
   }
 }

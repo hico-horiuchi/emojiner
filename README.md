@@ -9,6 +9,7 @@ Herokuでの簡単な導入説明。
     $ heroku create --stack cedar emojiner
     $ heroku config:set HUBOT_PING_PATH="/emojiner/ping"
     $ heroku config:set HUBOT_SLACK_TOKEN=""
+    $ heroku config:set REDIS_URL="redis://localhost:6379"
     $ heroku config:set TZ=Asia/Tokyo
     $ git push heroku master
 
@@ -44,6 +45,10 @@ Herokuでの簡単な導入説明。
 
 <table>
   <tbody>
+    <tr>
+      <td><tt>changelog_cron.coffee</tt></td>
+      <td>毎日0時に絵文字のリストを取得して保存(上書き)</td>
+    </tr>
   </tbody>
 </table>
 

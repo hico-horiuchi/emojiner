@@ -27,5 +27,5 @@ module.exports = (robot) ->
       t.cell('Description', arr[1])
       t.newRow()
     if t.rows.length > 0
-      return msg.reply('```\n' + t.print().trim() + '\n```')
+      return msg.reply("```\n#{t.print().trim()}\n```")
     msg.reply(NIL_MSG)
