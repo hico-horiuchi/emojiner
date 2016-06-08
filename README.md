@@ -8,6 +8,7 @@ Herokuでの簡単な導入説明。
 
     $ heroku create --stack cedar emojiner
     $ heroku config:set HUBOT_PING_PATH="/ping"
+    $ heroku config:set HUBOT_SLACK_EXIT_ON_DISCONNECT="true"
     $ heroku config:set HUBOT_SLACK_TOKEN=""
     $ heroku config:set REDIS_URL="redis://localhost:6379"
     $ heroku config:set TZ=Asia/Tokyo
