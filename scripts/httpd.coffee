@@ -2,7 +2,7 @@
 #   簡単なビルトインHTTPデーモン
 #
 # URLs:
-#   GET /emojiner/info - Emojinerの紹介ページを表示
+#   GET /info - Emojinerの紹介ページを表示
 
 module.exports = (robot) ->
   INFO_PAGE =

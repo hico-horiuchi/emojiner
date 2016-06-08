@@ -7,7 +7,7 @@
 Herokuでの簡単な導入説明。
 
     $ heroku create --stack cedar emojiner
-    $ heroku config:set HUBOT_PING_PATH="/emojiner/ping"
+    $ heroku config:set HUBOT_PING_PATH="/ping"
     $ heroku config:set HUBOT_SLACK_TOKEN=""
     $ heroku config:set REDIS_URL="redis://localhost:6379"
     $ heroku config:set TZ=Asia/Tokyo
@@ -35,7 +35,7 @@ Herokuでの簡単な導入説明。
   <tbody>
     <tr>
       <td><tt>httpd.coffee</tt></td>
-      <td><tt>GET /emojiner/info</tt></td>
+      <td><tt>GET /info</tt></td>
       <td>Emojinerの紹介ページを表示</td>
     </tr>
   </tbody>
