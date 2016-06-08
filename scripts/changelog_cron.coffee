@@ -39,8 +39,8 @@ module.exports = (robot) ->
     diff = _.difference(args.list, previous)
     if diff.length is 0
       return args.callbacks.shift()(args)
-    diff = diff.map (item) ->
-      ":#{item}:"
+    diff = diff.map (name) ->
+      ":#{name}:"
     msg = "昨日追加されたEmojiは *#{diff.length}個* です!\n#{diff.join(' ')}"
     robot.send({ room: ROOM }, msg)
     if args.callbacks? and args.callbacks.length > 0

@@ -35,6 +35,11 @@ Herokuでの簡単な導入説明。
 <table>
   <tbody>
     <tr>
+      <td><tt>changelog_web.coffee</tt></td>
+      <td><tt>GET /changelog</tt></td>
+      <td>今日追加された絵文字のリストを表示</td>
+    </tr>
+    <tr>
       <td><tt>httpd.coffee</tt></td>
       <td><tt>GET /info</tt></td>
       <td>Emojinerの紹介ページを表示</td>

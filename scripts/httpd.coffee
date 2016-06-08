@@ -68,5 +68,5 @@ module.exports = (robot) ->
 </html>
     """
 
-  robot.router.get '/emojiner/info', (req, call) ->
+  robot.router.get '/info', (req, call) ->
     call.end(INFO_PAGE)

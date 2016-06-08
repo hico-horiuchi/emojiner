@@ -23,10 +23,10 @@ module.exports = (robot) ->
         token: process.env.HUBOT_SLACK_TOKEN
     request.get options, (err, res, body) ->
       if err? or res.statusCode isnt 200
-        args.msg.send("```\n#{err}\n```")
+        return args.msg.send("```\n#{err}\n```")
       json = JSON.parse(body)
       unless json.ok
-        args.msg.send("```\n#{json.error}\n```")
+        return args.msg.send("```\n#{json.error}\n```")
       args.list = []
       for name, url of json.emoji
         if url.match(/^alias:/)
@@ -41,8 +41,8 @@ module.exports = (robot) ->
     diff = _.difference(args.list, previous)
     if diff.length is 0
       return args.msg.send(NIL_MSG)
-    diff = diff.map (item) ->
-      ":#{item}: (#{item})"
+    diff = diff.map (name) ->
+      ":#{name}: (#{name})"
     msg = "今日追加されたEmojiは *#{diff.length}個* です!\n#{diff.join(' ')}"
     args.msg.send(msg)
     if args.callbacks? and args.callbacks.length > 0
