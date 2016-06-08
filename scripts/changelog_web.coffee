@@ -49,10 +49,20 @@ module.exports = (robot) ->
         width: 2em;
         height: 2em;
         line-height: 2em;
+        text-align: left;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: 50% 50%;
+      }
+      td {
+        padding: 4px !important;
+      }
+      td:first-child {
+        text-align: right;
+      }
+      td:last-child {
         text-align: left;
+        padding-top: 0.6em !important;
       }
       a.black {
         color: #333333;
@@ -77,7 +87,11 @@ module.exports = (robot) ->
           <div class="well">
             <h1 class="bold">Changelog</h1>
             <p>New custom emoji added today.</p>
-            <p>#{list.join(' ')}</p>
+            <table class="table">
+              <tbody>
+                #{list.join('')}
+              </tbody>
+            </table>
             <p><a class="btn btn-default btn-lg" href="https://slack.com/customize/emoji"><i class="fa fa-lg fa-slack m-r-05"></i>Add Custom Emoji</a></p>
             <p><i class="fa fa-copyright m-r-05"></i><a class="black" href="http://hico-horiuchi.github.io/" target="_blank">Akihiko Horiuchi</a></p>
           </div>
@@ -118,7 +132,7 @@ module.exports = (robot) ->
     if diff.length is 0
       return args.msg.send(NIL_MSG)
     diff = diff.map (name) ->
-      "<span class=\"emoji m-r-05\" style=\"background-image: url(#{args.url[name]})\" title=\"#{name}\">:#{name}:</span>(#{name})"
+      "<tr><td><span class=\"emoji m-r-05\" style=\"background-image: url(#{args.url[name]})\" title=\"#{name}\">:#{name}:</span></td><td>#{name}</td></tr>"
     args.call.end(changelogPage(diff))
     if args.callbacks? and args.callbacks.length > 0
       args.callbacks.shift()(args)

@@ -42,7 +42,7 @@ module.exports = (robot) ->
     if diff.length is 0
       return args.msg.send(NIL_MSG)
     diff = diff.map (name) ->
-      ":#{name}: (#{name})"
+      ":#{name}:"
     msg = "今日追加されたEmojiは *#{diff.length}個* です!\n#{diff.join(' ')}"
     args.msg.send(msg)
     if args.callbacks? and args.callbacks.length > 0
