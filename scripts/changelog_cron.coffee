@@ -2,6 +2,7 @@
 #   毎日0時に絵文字のリストを取得して保存(上書き)
 #
 # Configuration:
+#   HUBOT_CHANGELOG_ROOM
 #   HUBOT_SLACK_TOKEN
 
 cronJob = require('cron').CronJob
@@ -11,7 +12,7 @@ _ = require('underscore')
 
 module.exports = (robot) ->
   KEY = 'slack-emoji-list'
-  ROOM = 'emojiner-dev'
+  ROOM = process.env.HUBOT_CHANGELOG_ROOM ? 'general'
 
   getEmojiList = (args) ->
     args = args ? []
