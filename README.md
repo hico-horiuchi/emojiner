@@ -6,10 +6,9 @@
 
 Herokuでの簡単な導入説明。
 
-    $ heroku create --stack cedar emojiner
+    $ heroku create --stack cedar-14 emojiner
     $ heroku config:set HUBOT_PING_PATH="/ping"
     $ heroku config:set HUBOT_CHANGELOG_ROOM="general"
-    $ heroku config:set HUBOT_SLACK_EXIT_ON_DISCONNECT="true"
     $ heroku config:set HUBOT_SLACK_TOKEN=""
     $ heroku config:set REDIS_URL="redis://localhost:6379"
     $ heroku config:set TZ=Asia/Tokyo
@@ -19,6 +18,10 @@ Herokuでの簡単な導入説明。
 
 <table>
   <tbody>
+    <tr>
+      <td><tt>changelog.coffee</tt></td>
+      <td><tt>changelog</tt></td>
+      <td>今日追加された絵文字のリストを表示</td>
     <tr>
       <td rowspan="2"><tt>help.coffee</tt></td>
       <td><tt>help</tt></td>
@@ -61,4 +64,4 @@ Herokuでの簡単な導入説明。
 
 ## SpecialThanks
 
-  - アイコンは「[In Spirited We Love Icon Se by Raindropmemory](http://raindropmemory.deviantart.com/art/In-Spirited-We-Love-Icon-Set-Repost-304014435)」を使っています。
+- アイコンは「[In Spirited We Love Icon Se by Raindropmemory](http://raindropmemory.deviantart.com/art/In-Spirited-We-Love-Icon-Set-Repost-304014435)」を使っています。
