@@ -16,21 +16,31 @@ module.exports = (robot) ->
 
   getEmojiList = (args) ->
     args = args ? []
-    options =
-      url: 'https://slack.com/api/emoji.list'
-      qs:
-        token: process.env.HUBOT_SLACK_TOKEN
-    request.get options, (err, res, body) ->
-      if err? or res.statusCode isnt 200
+    robot.adapter.client.web.emoji.list (err, info) ->
+      if err?
         return robot.logger.error(err)
-      json = JSON.parse(body)
-      unless json.ok
-        return robot.logger.error(json.error)
+      unless info.ok
+        return robot.logger.error(info.error)
       args.list = []
-      for name, url of json.emoji
+      for name, url of info.emoji
         if url.match(/^alias:/)
           continue
         args.list.push(name)
+      if args.callbacks? and args.callbacks.length > 0
+        args.callbacks.shift()(args)
+
+  getChannelsList = (args) ->
+    args = args ? []
+    robot.adapter.client.web.channels.list (err, info) ->
+      if err?
+        return robot.logger.error(err)
+      unless info.ok
+        return robot.logger.error(info.error)
+      args.channel_name = args.channel_name  ? ''
+      for channel in info.channels
+        if channel.name is args.channel_name
+          args.channel_id = channel.id
+          break
       if args.callbacks? and args.callbacks.length > 0
         args.callbacks.shift()(args)
 
@@ -43,7 +53,7 @@ module.exports = (robot) ->
     diff = diff.map (name) ->
       ":#{name}:"
     msg = "昨日追加されたEmojiは *#{diff.length}個* です!\n#{diff.join(' ')}"
-    robot.send({ room: ROOM }, msg)
+    robot.send({ room: args.channel_id }, msg)
     if args.callbacks? and args.callbacks.length > 0
       args.callbacks.shift()(args)
 
@@ -57,7 +67,8 @@ module.exports = (robot) ->
     cronTime: '0 0 0 * * *'
     onTick: ->
       args =
-        callbacks: [postChangelog, updateEmojiList]
+        channel_name: ROOM.replace(/^#/, '')
+        callbacks: [getChannelsList, postChangelog, updateEmojiList]
       getEmojiList(args)
     start: true
     timeZone: 'Asia/Tokyo'

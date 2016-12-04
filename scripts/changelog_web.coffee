@@ -19,9 +19,9 @@ module.exports = (robot) ->
     <title>Changelog | Emojiner</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/lumen/bootstrap.min.css" rel="stylesheet" />
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="//fonts.googleapis.com/css?family=Exo:400,600" rel="stylesheet" />
     <link href="//raw.githubusercontent.com/hico-horiuchi/emojiner/master/data/favicon.ico" rel="shortcut icon" />
     <style type="text/css"><!--
@@ -105,19 +105,14 @@ module.exports = (robot) ->
 
   getEmojiList = (args) ->
     args = args ? []
-    options =
-      url: 'https://slack.com/api/emoji.list'
-      qs:
-        token: process.env.HUBOT_SLACK_TOKEN
-    request.get options, (err, res, body) ->
-      if err? or res.statusCode isnt 200
+    robot.adapter.client.web.emoji.list (err, info) ->
+      if err?
         return args.call.send(err)
-      json = JSON.parse(body)
-      unless json.ok
-        return args.call.send(json.error)
+      unless info.ok
+        return args.call.send(info.error)
       args.list = []
       args.url = {}
-      for name, url of json.emoji
+      for name, url of info.emoji
         if url.match(/^alias:/)
           continue
         args.list.push(name)
@@ -129,8 +124,6 @@ module.exports = (robot) ->
     args = args ? []
     previous = robot.brain.get(KEY) ? []
     diff = _.difference(args.list, previous)
-    if diff.length is 0
-      return args.msg.send(NIL_MSG)
     diff = diff.map (name) ->
       "<tr><td><span class=\"emoji m-r-05\" style=\"background-image: url(#{args.url[name]})\" title=\"#{name}\">:#{name}:</span></td><td>#{name}</td></tr>"
     args.call.end(changelogPage(diff))

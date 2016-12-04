@@ -17,18 +17,13 @@ module.exports = (robot) ->
 
   getEmojiList = (args) ->
     args = args ? []
-    options =
-      url: 'https://slack.com/api/emoji.list'
-      qs:
-        token: process.env.HUBOT_SLACK_TOKEN
-    request.get options, (err, res, body) ->
-      if err? or res.statusCode isnt 200
+    robot.adapter.client.web.emoji.list (err, info) ->
+      if err?
         return args.msg.send("```\n#{err}\n```")
-      json = JSON.parse(body)
-      unless json.ok
-        return args.msg.send("```\n#{json.error}\n```")
+      unless info.ok
+        return args.msg.send("```\n#{info.error}\n```")
       args.list = []
-      for name, url of json.emoji
+      for name, url of info.emoji
         if url.match(/^alias:/)
           continue
         args.list.push(name)
