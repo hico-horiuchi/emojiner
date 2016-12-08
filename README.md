@@ -7,9 +7,10 @@
 Herokuでの簡単な導入説明。
 
     $ heroku create --stack cedar-14 emojiner
-    $ heroku config:set HUBOT_PING_PATH="/ping"
     $ heroku config:set HUBOT_CHANGELOG_ROOM="general"
-    $ heroku config:set HUBOT_SLACK_TOKEN=""
+    $ heroku config:set HUBOT_PING_PATH="/ping"
+    $ heroku config:set HUBOT_SLACK_TOKEN="xoxb-01234567890-ABCDEFGHIJKLMNOPQRSTUVWX"
+    $ heroku config:set HUBOT_URL="$(heroku info -s | grep web_url | cut -d= -f2)"
     $ heroku config:set REDIS_URL="redis://localhost:6379"
     $ heroku config:set TZ=Asia/Tokyo
     $ git push heroku master

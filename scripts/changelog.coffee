@@ -14,6 +14,7 @@ _ = require('underscore')
 module.exports = (robot) ->
   KEY = 'slack-emoji-list'
   NIL_MSG = '今日追加された絵文字はないよ! 職人さん頑張って!'
+  URL = process.env.HUBOT_URL ? 'http://localhost:8080'
 
   getEmojiList = (args) ->
     args = args ? []
@@ -38,7 +39,9 @@ module.exports = (robot) ->
       return args.msg.send(NIL_MSG)
     diff = diff.map (name) ->
       ":#{name}:"
-    msg = "今日追加されたEmojiは *#{diff.length}個* です!\n#{diff.join(' ')}"
+    msg =  "今日追加された絵文字は *#{diff.length}個* です!\n"
+    msg += "#{diff.slice(0, 10).join(' ')}#{' ...' if diff.length > 10}\n"
+    msg += "#{URL.replace(/\/$/, '')}/changelog"
     args.msg.send(msg)
     if args.callbacks? and args.callbacks.length > 0
       args.callbacks.shift()(args)

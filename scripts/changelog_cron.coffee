@@ -2,7 +2,7 @@
 #   毎日0時に絵文字のリストを取得して保存(上書き)
 #
 # Configuration:
-#   HUBOT_CHANGELOG_ROOM
+#   HUBOT_CHANGELOG_CHANGELOG_ROOM
 #   HUBOT_SLACK_TOKEN
 
 cronJob = require('cron').CronJob
@@ -12,7 +12,7 @@ _ = require('underscore')
 
 module.exports = (robot) ->
   KEY = 'slack-emoji-list'
-  ROOM = process.env.HUBOT_CHANGELOG_ROOM ? 'general'
+  CHANGELOG_ROOM = process.env.HUBOT_CHANGELOG_CHANGELOG_ROOM ? 'general'
 
   getEmojiList = (args) ->
     args = args ? []
@@ -49,10 +49,15 @@ module.exports = (robot) ->
     previous = robot.brain.get(KEY) ? []
     diff = _.difference(args.list, previous)
     if diff.length is 0
-      return args.callbacks.shift()(args)
+      if args.callbacks? and args.callbacks.length > 0
+        args.callbacks.shift()(args)
+      else
+        return
     diff = diff.map (name) ->
       ":#{name}:"
-    msg = "昨日追加されたEmojiは *#{diff.length}個* です!\n#{diff.join(' ')}"
+    msg =  "昨日追加された絵文字は *#{diff.length}個* です!\n"
+    msg += "#{diff.slice(0, 10).join(' ')}#{' ...' if diff.length > 10}\n"
+    msg += "#{URL.replace(/\/$/, '')}/changelog"
     robot.send({ room: args.channel_id }, msg)
     if args.callbacks? and args.callbacks.length > 0
       args.callbacks.shift()(args)
@@ -67,7 +72,7 @@ module.exports = (robot) ->
     cronTime: '0 0 0 * * *'
     onTick: ->
       args =
-        channel_name: ROOM.replace(/^#/, '')
+        channel_name: CHANGELOG_ROOM.replace(/^#/, '')
         callbacks: [getChannelsList, postChangelog, updateEmojiList]
       getEmojiList(args)
     start: true
